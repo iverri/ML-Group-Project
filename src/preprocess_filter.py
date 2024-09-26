@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 
@@ -9,7 +9,7 @@ class Filter(ABC):
     Args:
         ABC (_type_): _description_ abstract class/ interface
     """
-
+    @abstractmethod
     def __call__(self):
         """_summary_ apply the preprocessing filter to the data, so that the filter is callable. 
 
