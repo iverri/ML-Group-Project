@@ -3,6 +3,7 @@ from src.feature_engineering_filter import (
     Filter,
     Feature_engineering_excample
 )
+from pandas import DataFrame
 
 from src.preprocess_filter import (
     Sort_by_id
@@ -16,15 +17,15 @@ class Pipeline:
     def __init__(self, filters: list[Filter]):
         self.filters = filters
 
-    def apply_filters(self, data):
+    def apply_filters(self, df: DataFrame) -> DataFrame:
         """
         Applies all filters in the pipeline to the image
         """
         for filter in self.filters:
-            data = filter(data)
-        return data
+            df = filter(df)
+        return df
     
-    def assemble_pipeline(self):
+    def assemble_pipeline(self) -> 'Pipeline':
         """
         Assembles the pipeline
         """
