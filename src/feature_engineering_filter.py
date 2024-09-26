@@ -16,3 +16,10 @@ class Feature_engineering_excample(Filter):
         
         #TODO: implement the feature engineering
         pass
+    
+class Feature_engineering_excample2(Filter):
+    """Excample of a second feature engineering filter
+    """
+    def __call__(self, data):
+        #TODO: implement a feature engineering filter here
+        pass
