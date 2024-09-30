@@ -33,7 +33,7 @@ class Sort_by_id(Filter):
         #TODO: implement the sorting by id
         pass
     
-class Feature_engineering_excample(Filter):
+class Feature_engineering_example(Filter):
     """_summary_ Feature_engineering_excample is a filter class that does some feature engineering
 
     """

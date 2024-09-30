@@ -1,7 +1,7 @@
 from src.preprocess_filter import Filter
 
 
-class Feature_engineering_excample(Filter):
+class Feature_engineering_example(Filter):
     """Feature_engineering_excample is a filter class that does some feature engineering
     """
     def __call__(self, data):
@@ -17,7 +17,7 @@ class Feature_engineering_excample(Filter):
         #TODO: implement the feature engineering
         pass
     
-class Feature_engineering_excample2(Filter):
+class Feature_engineering_example2(Filter):
     """Excample of a second feature engineering filter
     """
     def __call__(self, data):
