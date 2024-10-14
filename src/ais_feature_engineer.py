@@ -3,7 +3,7 @@ import numpy as np
 from datetime import datetime
 # from geopy.distance import geodesic
 from typing import Tuple, List
-from autogluon.tabular import TabularDataset
+# from autogluon.tabular import TabularDataset
 
 
 class AISFeatureEngineer:
@@ -44,14 +44,14 @@ class AISFeatureEngineer:
         """
         Loads the datasets into pandas DataFrames.
         """
-        self.ais_train_df = pd.read_csv(self.ais_train_path)
-        self.ais_test_df = pd.read_csv(self.ais_test_path)
+        self.ais_train_df = pd.read_csv(self.ais_train_path, delimiter="|")
+        self.ais_test_df = pd.read_csv(self.ais_test_path, delimiter="|")
         if self.vessels_path:
-            self.vessels_df = pd.read_csv(self.vessels_path)
+            self.vessels_df = pd.read_csv(self.vessels_path, delimiter="|")
         if self.schedules_path:
-            self.schedules_df = pd.read_csv(self.schedules_path)
+            self.schedules_df = pd.read_csv(self.schedules_path, delimiter="|")
         if self.ports_path:
-            self.ports_df = pd.read_csv(self.ports_path)
+            self.ports_df = pd.read_csv(self.ports_path, delimiter="|")
 
     def preprocess_ais_data(self) -> None:
         """
@@ -175,28 +175,3 @@ class AISFeatureEngineer:
         return train_df, test_df, features, target_lat, target_lon
 
 
-if __name__ == "__main__":
-    feature_engineer = AISFeatureEngineer(
-        ais_train_path='ais_train.csv',
-        ais_test_path='ais_test.csv',
-        vessels_path='vessels.csv',
-        schedules_path='schedules_to_may_2024.csv',
-        ports_path='ports.csv'
-    )
-
-    feature_engineer.load_data()
-
-    feature_engineer.preprocess_ais_data()
-
-    feature_engineer.generate_features()
-
-    train_df, test_df, features, target_lat, target_lon = \
-        feature_engineer.prepare_data_for_modeling()
-
-    train_data = TabularDataset(train_df[features + [target_lat, target_lon]])
-    test_data = TabularDataset(test_df[features])
-
-    print("Training Data:")
-    print(train_data.head())
-    print("\nTest Data:")
-    print(test_data.head())
