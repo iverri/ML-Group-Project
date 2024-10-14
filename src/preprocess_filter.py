@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+from pandas import DataFrame
 
 
 
@@ -34,15 +34,19 @@ class Sort_by_id(Filter):
         pass
     
 class Feature_engineering_example(Filter):
-    """_summary_ Feature_engineering_excample is a filter class that does some feature engineering
+    """_summary_ Feature_engineering_example is a filter class that does some feature engineering
 
     """
     
-    def __call__(self, data):
+    def __call__(self, data) -> Filter:
         #TODO: implement the feature engineering filter here
         pass
 
 
+
+        
+        
+        
 
 
 
