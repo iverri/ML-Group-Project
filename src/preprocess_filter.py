@@ -84,6 +84,7 @@ class Create_sequence_vectors(Filter):
         """
 
         def zip_features(group):
+            # Zip the features together for the group
             features = [
                 list(feature_tuple)
                 for feature_tuple in zip(
@@ -97,14 +98,29 @@ class Create_sequence_vectors(Filter):
                     group["time_diff"],
                 )
             ]
-            return features
+            # If the vessel has less than 5 entries, remove it
+            if len(features) < 5:
+                return None
+            # Create a dictionary with lists wrapped in another list
+            data = {
+                "TD1": [features[-5]],
+                "TD2": [features[-4]],
+                "TD3": [features[-3]],
+                "TD4": [features[-2]],
+                "TD5": [features[-1]],
+            }
+            # Return as a DataFrame with a single row
+            return pd.DataFrame(data)
 
+        # Apply the zip_features function to each group and reset the index
         data_zipped = (
-            data.groupby("vesselId")
+            data.groupby("vesselId", as_index=False)
             .apply(zip_features)
-            .to_frame()
-            .rename(columns={0: "sequences"})
+            .reset_index(drop=True)
         )
+
+        # Remove any None entries resulting from vessels with less than 5 entries
+        data_zipped = data_zipped.dropna()
 
         return data_zipped
 
@@ -122,9 +138,13 @@ class Timestamp_to_timedif(Filter):
             _type_:? _description_ the altered data
         """
 
-        data["time"] = data["time"].apply(lambda x: pd.Series(x))
-        data["time"] = data["time"]
+        # Calculate the time difference grouped by "vesselId"
         data["time_diff"] = data.groupby("vesselId")["time"].diff(-1).dt.total_seconds()
+
+        # Ensure positive time differences and fill missing values with 0
         data["time_diff"] = data["time_diff"].abs().fillna(0)
-        # data = data.drop("time", axis=1) # Needs the actual dates for creating timesteps during training data generation, and querying
+
+        # Uncomment the line below if you want to remove the "time" column after processing
+        # data = data.drop("time", axis=1)
+
         return data
