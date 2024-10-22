@@ -1,0 +1,32 @@
+@startuml
+
+package Pipe_and_filter{
+
+    class Pipeline{
+        + apply_filters(data)
+        + assemble_pipeline(self, filter: Callable):
+    }
+
+    class Feature_engineering_filter{
+        + filter1
+        + filter2
+    }
+
+    class Preprocess_filter{
+        + filter1
+        + filter2
+    }
+
+}
+
+Pipeline *-- Feature_engineering_filter
+Pipeline *-- Preprocess_filter
+
+
+
+@enduml
+
+
+
+
+
