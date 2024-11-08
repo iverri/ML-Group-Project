@@ -4,6 +4,7 @@ import numpy as np
 import h2o
 import os
 import pandas as pd
+import math
 
 
 class Filter(ABC):
@@ -199,11 +200,12 @@ class LastKnownLocation(Filter):
         _type_:? _description_ the altered data
 
     """
-    def __call__(self, data: DataFrame, shift_lenghts) -> DataFrame:
+    def __call__(self, data: DataFrame, max_shift_lenghts: int) -> DataFrame:
         
         all_test_data = DataFrame()
 
-        for shift_length in shift_lenghts:
+        shift_length = 1
+        while (shift_length <= max_shift_lenghts):
 
             grouped_data = data.groupby("vesselId").apply(
                 lambda x: x.sort_values("time")
@@ -266,6 +268,12 @@ class LastKnownLocation(Filter):
                 [all_test_data, result],
                 ignore_index=True
                 )
+            prev_shift_length = shift_length
+            shift_length = math.floor(shift_length**(1.1))
+            if shift_length == prev_shift_length:
+                shift_length += 1
+            
+            print(f"Shift length: {shift_length}")
 
         # Uncomment the line below if you want to remove the "time" 
         # column after processing
