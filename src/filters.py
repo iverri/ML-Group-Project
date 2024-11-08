@@ -203,7 +203,7 @@ class LastKnownLocation(Filter):
     def __call__(self, data: DataFrame, max_shift_lenghts: int) -> DataFrame:
         
         all_test_data = DataFrame()
-
+        prev_shift_length = 1
         shift_length = 1
         while (shift_length <= max_shift_lenghts):
 
