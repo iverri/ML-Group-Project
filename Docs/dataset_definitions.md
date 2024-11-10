@@ -69,6 +69,8 @@ This is a unique identifier assigned to each vessel. It's a reference key that c
 ## portId
 This is a unique identifier for ports, mapped for convenience. It's set by the captain in each vessel, so it can be wrong or misleading in some cases, which will lead to incorrect mapping. It's used as a proposal to identify the destination or origin port of a vessel’s voyage. It is derived based on a prioritized search on the “dest” column in the original AIS data by matching on name or port codes. In cases where multiple port codes are listed in the column, the last value is used. This rule can potentially lead to some inconsistencies.
 
+
+
 ## shippingLineId
 This is a unique identifier assigned to a shipping line. It links a vessel to its owner, which can be useful for analyzing operational patterns, fleet management, and company-specific performance metrics. This company is not always the one operating the vessel.
 
